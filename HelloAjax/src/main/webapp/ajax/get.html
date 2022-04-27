@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax/get.html</title>
+</head>
+<body>
+	<div id="show"></div>
+		<table border="1">
+			<thead>
+				<tr><th>학생번호</th><th>학생이름</th><th>영어</th><th>국어</th></tr>
+			</thead>
+		<tbody id="list">
+		</tbody>
+		</table>
+	<script>
+		// 서버에 파일을 요청하고 파일을 읽어들이도록
+		let xhtp = new XMLHttpRequest(); // new String();
+		xhtp.open("get", "../studentList.json"); // 요청할 페이지의 값을 지정
+		xhtp.send(); // 호출시작
+		xhtp.onload = function() { // 메소드 아니고 속성.. / on~는 이벤트와 관련된 속성 / 요청한 결과값을 받아오면 function을 실행하시오
+			let data = JSON.parse(xhtp.response); // JSON.parse -> db에서 불러온 값을 자바스크립트 배열 [{},{}..]로 변환시켜주는 함수
+			console.log(data);
+			for(let i=0; i<data.length; i++) { // 변수 data가 배열 형태이기 때문에 값을 반복해서 저장해야하므로 for문을 사용해서 document
+			document.getElementById('list').appendChild(makeTr(data[i])); // makeTr의 매개변수인 student에 넣을 값을 배열 data에서 가져올 것이므로 data[i]를 매개변수로 사용
+			}
+			// document.getElementById('show').innerHTML = xhtp.response;
+		};
+		
+		function makeTr(student) {
+			let tr = document.createElement('tr');
+  			for (let stu in student) {
+    		let td = document.createElement('td');
+    		td.innerHTML = student[stu];
+    		tr.appendChild(td);
+  			}
+  			return tr;
+		}
+		
+	</script>
+</body>
+</html>
