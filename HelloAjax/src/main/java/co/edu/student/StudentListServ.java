@@ -22,7 +22,7 @@ public class StudentListServ extends HttpServlet {
 		StudentDAO dao = new StudentDAO();
 		List<Student> list = dao.studentList();
 
-		String jsonString = "[";
+		String jsonString = "["; // studentList.json
 		for (int i = 0; i < list.size(); i++) {
 			jsonString += "{\"studentNo\": " + list.get(i).getStudentNo() + ", \"studentName\": \""
 					+ list.get(i).getStudentName() + "\", \"engScore\": " + list.get(i).getEngScore()
