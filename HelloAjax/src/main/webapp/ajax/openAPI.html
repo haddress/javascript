@@ -5,15 +5,143 @@
 <title>openAPI.html</title>
 </head>
 <body>
+
+	<input type="text" id="sido" value="대전광역시"><button id="findBtn">찾기</button>
+
+	<div id="show">
+		<table border="1">
+			<thead id="thead"></thead>
+			<tbody id="tbody"></tbody>
+		</table>
+	</div>
+	
 	<script>
-	let url = `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=IBDJEuFGmtr%2Fg6bkNg3OXW6Fv5zjfanoFtshEi25C894IdpaJDDFNLvxcIjuQ9aLToBM1VPY%2FCgM5I7UU18O8g%3D%3D`;
-	let xhtp = new XMLHttpRequest();
-	xhtp.open('get', url);
-	xhtp.send();
-	xhtp.onload = function() {
-		let data = JSON.parse(xhtp.responseText);
-		console.log(data);
+	console.log('start');
+	
+	let fields = ['id', 'sido', 'address', 'phoneNumber', 'zipCode']; // 변수, 함수선언은 되도록 위에
+	
+	// this
+	let obj = {
+		name: 'Hong',
+		age: 20,
+		showInfo: function() {
+			return this.name + ', ' + this.age;
+		}
 	}
+	
+	function globalFnc() {
+		console.log(this); // window객체. 
+	}
+	globalFnc();
+	
+	function init() {
+		let url = `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=IBDJEuFGmtr%2Fg6bkNg3OXW6Fv5zjfanoFtshEi25C894IdpaJDDFNLvxcIjuQ9aLToBM1VPY%2FCgM5I7UU18O8g%3D%3D`;
+		// 비동기처리 방식(Asychronous Javascript And Xml)
+		// 서버에 요청한 결과를 받아오는걸 기다리지 않고 그 다음 프로젝트를 바로 미리 진행. 처리속도가 빠름.
+		let result = '';
+		let xhtp = new XMLHttpRequest(); 
+		xhtp.open('get', url);
+		xhtp.send();
+		xhtp.onload = loadCallBack; // 실행구문이 아닌 함수 이름을 넣어줌 -> 실행구문을 넣어버리면 코드를 순차적으로 읽게 됨(?)
+		
+		let findBtn = document.getElementById("findBtn");
+		findBtn.addEventListener('click', findCallBack);
+	}
+	init(); // 실행
+	
+	function findCallBack() { // this는 event를 받는 대상을 가리킴
+		console.log(this);
+		// 기능구현. input.value 속성을 읽어와서 filterAry 배열로 헤더, 바디 생성
+		let searchSido = document.getElementById("sido").value; // id="sido"의 value값
+		
+		// 헤더
+		let filterAry = result.data.filter(function (elem) {
+			// return elem.sido.startsWith(searchSido); // startWith(문자)
+			return elem.sido.indexOf(searchSido) != -1; // 포함
+		});
+		
+		// 바디
+		makeBody(filterAry);
+		
+		// 입력값을 지우기
+		document.getElementById('sido').value = '';
+	
+	} // findCallBack() 의 끝
+	
+	 // 비동기방식으로 진행 시, 시간이 오래걸리는 다른 프로그램을 기다리는 대신 가장 마지막의 console.log('end')가 실행될 수도 있음.
+	 // 따라서 비동기방식은 코드가 순서대로 진행된다고 생각하면 안됨
+	 // console.log("총건수: " + result.totalCount)도 xhtp.onload 다음에 있지만 console이 먼저 실행됨.
+	 // 비동기방식이므로 onload에서는 result 변수에 값을 담도록 설정되어있지만, console에서는 result 변수가 출력되지 않음(undefined로 뜸).
+	
+	console.log('end');
+	
+	
+	
+	function loadCallBack() {
+		result = JSON.parse(this.responseText); // response, responseText / xhtp.responseText에서 this.responseText로 바꿈 -> 아마 위에서 this.로 지정해서..?
+		console.log(result);
+		console.log("총건수: " + result.totalCount);
+		
+		console.log(result.data[0]);
+		
+		result.data.forEach(function(elem) { // result가 배열로 담겨있으므로 forEach로
+			if(elem.sido == '서울특별시')
+				console.log(`id: ${elem.id}, center: ${elem.centerName}`);
+		});
+		
+		console.clear();
+		
+		// {totalCount, data, }
+		let filterAry = result.data.filter(function (elem) { // 배열 요소를 순회하면서 조건에 일치하는 요소를 모아(filter) 새로운 배열을 형성
+			return elem.sido == '대전광역시';
+		});
+		console.log(filterAry);
+		
+		// head
+		let head = document.getElementById('thead');
+		let tr = document.createElement('tr');
+		head.appendChild(tr);
+		
+		fields.forEach(function(elem) {
+			let td = document.createElement('td');
+			td.innerHTML = elem.toUpperCase();
+			tr.appendChild(td);
+			
+		});
+		
+	} // loadCallBack()의 끝
+
+	function makeBody(ary) { // ary매개변수가 배열값 ('tbody'를 읽어와서 ary매개변수에 들어있는 배열값만큼 루틴돌면서 출력)
+		// body
+		let body = document.getElementById('tbody');
+		
+		// 이미 생성된 조회정보가 있으면 삭제
+		let childTr = document.querySelectorAll('#tbody>tr') // querySelector만 하면 값을 하나만 가져오니까 에러. querySelectorAll해야 모든 값을 가져와서 forEach가 가능
+		childTr.forEach(function(elem) {
+			// elem.remove(); // 찾아온 tr 삭제
+			body.removeChild(elem) // let body를 기준으로 이미 생성된 정보가 있으면 하위요소 삭제
+		});
+		
+		ary.forEach(function(center) {
+			let tr = document.createElement('tr');
+			body.appendChild(tr);
+			
+			fields.forEach(function(elem) {
+				let td = document.createElement('td');
+				// address 필드일 경우에는 링크
+				if(elem == 'address') {
+					let aTag = document.createElement('a');
+					aTag.setAttribute('href', `daumApi.html?x=${center.lat}&y=${center.lng}&f=${center.facilityName}`); // 배열에 있는 lat, lng 값을 읽어와야함. 필드의 elem을 가져와서 elem.lat ~를 쓰면 안됨. 
+					aTag.setAttribute('target', '_blank')
+					aTag.innerHTML = center[elem];
+					td.appendChild(aTag);
+				} else {
+					td.innerHTML = center[elem];
+				}
+				tr.appendChild(td);
+			});
+	}); 
+	}// makeBody()의 끝
 	</script>
 </body>
 </html>

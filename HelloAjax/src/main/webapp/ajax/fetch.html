@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="ajax2.js"></script>
+</head>
+<body>
+	<script>
+		// Ajax => XMLHttpRequest: => fetch();
+		let xhtp = new XMLHttpRequest();
+		xhtp.open('get', '../studentList.json');
+		xhtp.send();
+		xhtp.onload = function() {
+			console.log('xmlhttprequest')
+			console.log(xhtp.responseText)
+			
+			let xhpt2 = new XMLHttpRequest();
+			
+			xhpt2.onload  = function() {
+			
+			}
+		}
+		
+		fetch('../studentList.json')
+			.then(function(result){ // 성공적으로 가져오면 then의 함수 실행
+				let val = result.json(); // pending중
+				return val;
+			})
+			.then(function(result) { // return val의 결과값을 console.log에서 출력
+				console.log(result);
+			})
+			.catch(function(error) { // 에러가 나면 catch의 함수 실행
+				console.log(error);
+			})
+		
+	</script>
+</body>
+</html>

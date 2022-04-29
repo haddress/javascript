@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<button id="chkDel">선택삭제</button>
+	<button id='allChk'>전체선택</button>
+	<table border='1'>
+		<tr>
+			<td>
+				<input type='checkbox'>
+			</td>
+			<td>
+				Hongkildong1
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type='checkbox'>
+			</td>
+			<td>
+				Hongkildong2
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type='checkbox'>
+			</td>
+			<td>
+				Hongkildong3
+			</td>
+		</tr>
+	</table>
+	<script>
+		let chkDel = document.getElementById('chkDel');
+		chkDel.addEventListener('click', chkTr);
+		
+		let allChk = document.getElementById('allChk');
+		allChk.addEventListener('click', allchk);
+
+		function chkTr() { // 선택삭제
+			let chkTr = document.querySelectorAll('table tr'); // table하위에 있는 tr 다 가져오도록
+			chkTr.forEach(function (tr) {
+				let chk = tr.firstElementChild.firstElementChild.checked;
+				if (chk == true) {
+					tr.remove();
+				}
+			});
+		}
+		
+		function allchk() { // 전체선택 (?)
+			let chkTr = document.querySelectorAll('table tr');
+			chkTr.forEach(function (tr){
+				let chk = tr.firstElementChild.firstElementChild.checked == true;
+			})
+		}
+		
+	</script>
+</body>
+
+</html>
