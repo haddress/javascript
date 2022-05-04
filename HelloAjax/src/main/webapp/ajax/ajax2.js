@@ -12,15 +12,15 @@ let promise = new Promise((resolve, reject) => {
 	}
 });
 
-promise.then( resolve => {
-	return new Promise((resolve, reject) {
-		val -= 2;
-		if(val > 0) {
-		resolve('succes, ' + val);
-	} else {
-		reject('error');
-	}
-});
-	});
-	.then()
-	.catch ();
+//promise.then('resolve'' => {
+//	return new Promise((resolve, reject) {
+//		val -= 2;
+//		if(val > 0) {
+//		resolve('succes, ' + val);
+//	} else {
+//		reject('error');
+//	}
+//});
+//	});
+//	.then()
+//	.catch ();
