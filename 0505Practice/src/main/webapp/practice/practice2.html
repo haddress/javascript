@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>표만들기</title>
+    <style>
+        #container{
+            font-family: "맑은 고딕", '돋움', '굴림';
+            width: 700px;
+            margin: 30px auto;
+            border: 1px solid gray;
+            background: #fcfcfc;
+        }
+        #form{
+            width: 400px;
+            height: 200px;
+            border: 1px solid gray;
+            float: left;
+            padding: 30px;
+            line-height: 40px;
+            background: #fcfbf5;
+        }
+        label{
+            margin-left: 30px;
+            width: 130px;
+            float: left;
+            font-weight: 700;
+        }
+        #btn{
+            width: 176px;
+            height: 200px;
+            float: left;
+            padding: 30px;
+            border: 1px solid gray;
+            background: #fcfbf5;
+        }
+        #btn button {
+            margin: 65px auto;
+            display: block;
+            width: 100px;
+            padding: 20px;
+            border: 1px solid gray;
+            border-radius: 10px;
+        }
+        #list{
+            margin-top: 300px;
+            margin-bottom: 50px;
+        }
+        #ckdel{
+            margin-left: 50px;
+            margin-bottom: 10px;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+        table{
+            width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="form">
+            <label>사용자아이디 </label><input type="text" id="userId" autofocus><br>
+            <label>사용자이름 </label><input type="text" id="userName"><br>
+            <label>이메일 </label><input type="email" id="userEmail"><br>
+            <label>전화번호 </label><input type="text" id="userTel"><br>
+            <label>생년월일 </label><input type="date" name="ubirth"><br>
+        </div>
+
+        <div id="btn">
+            <button id="userJoin">등록</button>
+        </div>
+        
+        <div id="list">
+            <button id="ckdel">선택삭제</button>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>선택</th>
+                        <th>순번</th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>전화번호</th>
+                        <th>생년월일</th>
+                    </tr>
+                </thead>
+                <tbody id="data">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+
+        let join = document.getElementById('userJoin');
+        join.addEventListener('click', joinUser);
+        let del = document.getElementById('ckdel');
+        del.addEventListener('click', checkDel);
+
+        function exUser() {
+            let user = [
+                {id:'user1', name:'홍길동', email:'user1@email.com', tel:'011-9870-1231', birth:'1994-03-12'},
+                {id:'user2', name:'홍길동', email:'user2@email.com', tel:'011-9870-1231', birth:'1994-03-12'}
+            ];
+            user.forEach(function(user) {
+                document.getElementById('data').appendChild(makeTr(user));
+            });
+        }
+        exUser();
+
+        function joinUser() {
+            let id = document.getElementById('userId').value;
+            let name = document.getElementById('userName').value;
+            let email = document.getElementById('userEmail').value;
+            let tel = document.getElementById('userTel').value;
+            let birth = document.querySelector('input[name=ubirth]').value;
+           
+            if (id == '' || name == '' || email == '' || tel == '' || birth == '') {
+                alert('값을 입력하세요.');
+                return;
+            }
+
+            let user = {
+                id: id,
+                name: name,
+                email: email,
+                tel: tel,
+                birth: birth
+            }
+            
+            document.getElementById('data').appendChild(makeTr(user));
+
+        }
+
+        function checkDel() {
+            let ckUser = document.querySelectorAll('tbody>tr');
+            ckUser.forEach(function (tr) {
+                let member = tr.firstElementChild.firstElementChild.checked;
+                if (member == true) {
+                    tr.remove();
+                }
+            })
+        }
+
+        function makeTr(obj) {
+            let tr = document.createElement('tr');
+            let td = document.createElement('td');
+            let check = document.createElement('input');
+            check.setAttribute('type', 'checkbox');
+            let td2 = document.createElement('td');
+            td2.innerText = document.querySelectorAll('tbody>tr').length+1;
+            td.appendChild(check);
+            tr.appendChild(td);
+            tr.appendChild(td2);
+            
+            for (let field in obj) {
+                let td = document.createElement('td');
+                td.innerHTML = obj[field];
+                tr.appendChild(td);
+            }
+            return tr;
+        }
+    </script>
+</body>
+</html>
