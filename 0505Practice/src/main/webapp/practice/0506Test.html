@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>0506 평가</title>
+</head>
+
+<body>
+  <div id="container">
+    <div id="form">
+      <label>도서코드</label><input type="text" id="bCode"><br>
+      <label>도서명</label><input type="text" id="bTitle"><br>
+      <label>저자</label><input type="text" id="bWriter"><br>
+      <label>출판사</label><input type="text" id="bCom"><br>
+      <label>금액</label><input type="text" id="bPrice"><br>
+    </div>
+    <div id="button">
+      <button id="submit">저장</button>
+      <button id="checkDel">선택삭제</button>
+    </div>
+    <div id="list">
+      <table border="1">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="allCk"></th>
+            <th>도서코드</th>
+            <th>도서명</th>
+            <th>저자</th>
+            <th>출판사</th>
+            <th>가격</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody id="body">
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <script>
+    let addB = document.getElementById('submit');
+    addB.addEventListener('click', addBook);
+    let ckUser = document.getElementById('checkDel');
+    ckUser.addEventListener('click', ckDelete);
+
+
+    function addBook() {
+      let bookCode, bookTitle, bookWriter, bookCompany, bookPrice;
+
+      bookCode = document.getElementById('bCode').value;
+      bookTitle = document.getElementById('bTitle').value;
+      bookWriter = document.getElementById('bWriter').value;
+      bookCompany = document.getElementById('bCom').value;
+      bookPrice = document.getElementById('bPrice').value;
+
+      let book = {
+        bookCode: bookCode,
+        bookTitle: bookTitle,
+        bookWriter: bookWriter,
+        bookCompany: bookCompany,
+        bookPrice: bookPrice
+      }
+
+      document.getElementById('body').append(makeTr(book));
+
+    }
+
+    function ckDelete() {
+      let ckDel = document.querySelectorAll('tbody>tr');
+      ckDel.forEach(function(tr) {
+        let bookCheck = tr.firstElementChild.firstElementChild.checked;
+        if (bookCheck == true) {
+          tr.remove();
+        }
+      })
+
+    }
+
+    function makeTr(obj) {
+      let tr = document.createElement('tr');
+      let td = document.createElement('td');
+      let check = document.createElement('input');
+      check.setAttribute('type', 'checkbox');
+      td.append(check);
+      tr.append(td);
+      for (let field in obj) {
+        let td = document.createElement('td');
+        td.innerHTML = obj[field];
+        let td2 = document.createElement('button');
+        td2.addEventListener('click', function() {
+          document.querySelectorAll('tbody>tr').remove();
+        })
+        tr.append(td);
+        tr.append(td2);
+      }
+
+    }
+
+    
+  </script>
+</body>
+
+</html>

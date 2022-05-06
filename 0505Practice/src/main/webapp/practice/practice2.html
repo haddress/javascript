@@ -11,7 +11,6 @@
             width: 700px;
             margin: 30px auto;
             border: 1px solid gray;
-            background: #fcfcfc;
         }
         #form{
             width: 400px;
@@ -20,7 +19,7 @@
             float: left;
             padding: 30px;
             line-height: 40px;
-            background: #fcfbf5;
+            background: #ddd;
         }
         label{
             margin-left: 30px;
@@ -34,7 +33,7 @@
             float: left;
             padding: 30px;
             border: 1px solid gray;
-            background: #fcfbf5;
+            background: #ddd;
         }
         #btn button {
             margin: 65px auto;
@@ -114,11 +113,14 @@
         exUser();
 
         function joinUser() {
-            let id = document.getElementById('userId').value;
-            let name = document.getElementById('userName').value;
-            let email = document.getElementById('userEmail').value;
-            let tel = document.getElementById('userTel').value;
-            let birth = document.querySelector('input[name=ubirth]').value;
+
+            let id, name, email, tel, birth;
+
+            id = document.getElementById('userId').value;
+            name = document.getElementById('userName').value;
+            email = document.getElementById('userEmail').value;
+            tel = document.getElementById('userTel').value;
+            birth = document.querySelector('input[name=ubirth]').value;
            
             if (id == '' || name == '' || email == '' || tel == '' || birth == '') {
                 alert('값을 입력하세요.');
@@ -139,10 +141,15 @@
 
         function checkDel() {
             let ckUser = document.querySelectorAll('tbody>tr');
-            ckUser.forEach(function (tr) {
-                let member = tr.firstElementChild.firstElementChild.checked;
-                if (member == true) {
-                    tr.remove();
+            // ckUser.forEach(function (tr) {
+            //     let member = tr.firstElementChild.firstElementChild.checked;
+            //     if (member == true) {
+            //         tr.remove();
+            //     }
+            // })
+            ckUser.forEach(elem => {
+                if(elem.firstElementChild.firstElementChild.checked == true) {
+                    elem.remove();
                 }
             })
         }

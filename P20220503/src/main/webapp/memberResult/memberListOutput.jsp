@@ -19,7 +19,17 @@
 					<thead><tr><th>아이디</th><th>이름</th><th>이메일</th><th>비밀번호</th></tr></thead>
 					<tbody>
 						<c:forEach items="${all }" var="member">
-							<tr><td>${member.id }</td><td>${member.name }</td><td>${member.email }</td><td>${member.passwd }</td></tr> <!-- 표현식에는 get메소드 안써도 됨 -->
+							<tr>
+								<td>${member.id }</td>
+								<td>${member.name }</td>
+								<td>${member.email }</td>
+								<td>${member.passwd }</td>
+								<td>
+									<c:if test="${!empty member.profile }">
+										<img width="70px" src="${pageContext.servletContext.contextPath }/upload/${member.profile }">
+									</c:if>	
+								</td>
+							</tr> <!-- 표현식에는 get메소드 안써도 됨 -->
 						</c:forEach>
 					</tbody>
 				</table>
