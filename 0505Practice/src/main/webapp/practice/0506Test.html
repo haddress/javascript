@@ -6,6 +6,61 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>0506 평가</title>
+  <style>
+    #container{
+      width: 750px;
+      margin: 30px auto;
+      font-family: "맑은 고딕", '돋움', '굴림';
+      border: 1px solid gray;
+    }
+    #form{
+      width: 580px;
+      float: left;
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+    #form label {
+      width: 150px;
+      height: 19px;
+      float: left;
+      text-align: center;
+      font-weight: 600;
+      background: wheat;
+      margin-right: 5px;
+      margin-top: 3px;
+    }
+    #form input {
+      width: 400px;
+    }
+    #button {
+      width: 140px;
+      display: block;
+      float: left;
+      text-align: center;
+      margin-top: 40px;
+    }
+    #button button {
+      width: 70px;
+      margin: 5px;
+    }
+    #list {
+      clear: both;
+      margin-top: 150px;
+      margin-bottom: 10px;
+    }
+    #list table {
+      width: 750px;
+      text-align: center;
+    }
+    #list table thead{
+      background: rgb(69, 69, 69);
+      color: white;
+    }
+    #list table thead tr th {
+      font-weight: normal;
+    }
+
+  </style>
 </head>
 
 <body>
@@ -22,10 +77,10 @@
       <button id="checkDel">선택삭제</button>
     </div>
     <div id="list">
-      <table border="1">
+      <table>
         <thead>
           <tr>
-            <th><input type="checkbox" id="allCk"></th>
+            <th><input type="checkbox" name="allCk" onclick="allCheck(this)"></th>
             <th>도서코드</th>
             <th>도서명</th>
             <th>저자</th>
@@ -43,13 +98,46 @@
   </div>
 
   <script>
+    // 저장, 선택삭제 버튼
     let addB = document.getElementById('submit');
     addB.addEventListener('click', addBook);
     let ckUser = document.getElementById('checkDel');
     ckUser.addEventListener('click', ckDelete);
 
+    // 전체선택
+    function checkSelectAll() {
+      let allCheck = document.querySelector('input[name=allCk]'); // thead 체크박스
+      let checkboxes = document.querySelectorAll('input[name=ck]'); // 전체 체크박스
+      let checked = document.querySelectorAll('input[name=ck]:checked'); // 체크박스 체크
 
-    function addBook() {
+      if(checkboxes.length === checked.length) { // 전체 체크박스와 선택된 체크박스 갯수가 같을때
+        allCheck.checked = true; // thead의 체크박스도 체크됨
+      } else {
+        allCheck.checked = false;
+      }
+    }
+    function allCheck(e) {
+      let checkboxes = document.getElementsByName('ck'); // 전체 체크박스
+      checkboxes.forEach(function(checkbox) { // 전체 체크박스 각 요소
+        checkbox.checked = e.checked; // e는 전체체크박스의 this (왜 앞뒤 순서를 바꾸면 안될까)
+      })
+    }
+    //
+
+    function init() { // 기존 책
+      let book = [
+        {bookCode:'P12301285', bookTitle:'이것이 자바다', bookWriter:'홍성문', bookCompany:'신흥출판사', bookPrice:'25,000원'},
+        {bookCode:'P12301285', bookTitle:'이것이 자바다', bookWriter:'홍성문', bookCompany:'신흥출판사', bookPrice:'25,000원'}
+      ]
+
+      book.forEach(function(book) {
+        document.getElementById('body').appendChild(makeTr(book));
+      });
+    }
+    init();
+    //
+
+    function addBook() { // 책 목록 추가
       let bookCode, bookTitle, bookWriter, bookCompany, bookPrice;
 
       bookCode = document.getElementById('bCode').value;
@@ -65,12 +153,18 @@
         bookCompany: bookCompany,
         bookPrice: bookPrice
       }
-
-      document.getElementById('body').append(makeTr(book));
-
+      document.getElementById('body').appendChild(makeTr(book));
+      
+      document.getElementById('bCode').value = '';
+      document.getElementById('bTitle').value = '';
+      document.getElementById('bWriter').value = '';
+      document.getElementById('bCom').value = '';
+      document.getElementById('bPrice').value = '';
+      
     }
+    //
 
-    function ckDelete() {
+    function ckDelete() { // 선택삭제
       let ckDel = document.querySelectorAll('tbody>tr');
       ckDel.forEach(function(tr) {
         let bookCheck = tr.firstElementChild.firstElementChild.checked;
@@ -78,27 +172,37 @@
           tr.remove();
         }
       })
-
     }
+    //
 
-    function makeTr(obj) {
+    function makeTr(obj) { // tr 생성
       let tr = document.createElement('tr');
       let td = document.createElement('td');
       let check = document.createElement('input');
       check.setAttribute('type', 'checkbox');
-      td.append(check);
-      tr.append(td);
+      check.setAttribute('name', 'ck');
+      td.appendChild(check);
+      tr.appendChild(td);
+
       for (let field in obj) {
         let td = document.createElement('td');
         td.innerHTML = obj[field];
-        let td2 = document.createElement('button');
-        td2.addEventListener('click', function() {
-          document.querySelectorAll('tbody>tr').remove();
-        })
         tr.append(td);
-        tr.append(td2);
       }
+      
+      // 삭제버튼
+      let td2 = document.createElement('td');
+      let btn = document.createElement('button');
+      btn.innerText = '삭제';
+      btn.addEventListener('click', function() {
+        tr.remove();
+      })
+      tr.append(td2);
+      td2.appendChild(btn);
+      tr.appendChild(td2);
+      //
 
+     return tr;
     }
 
     
