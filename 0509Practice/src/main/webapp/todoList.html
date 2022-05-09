@@ -122,8 +122,8 @@ input {
 <body>
 	<div id="myDIV" class="header">
 		<h2>My To Do List</h2>
-		<input type="text" id="myInput" placeholder="Title..."> <span
-			onclick="newElement()" class="addBtn">Add</span>
+		<input type="text" id="myInput" placeholder="Title..."> 
+		<span onclick="newElement()" class="addBtn">Add</span>
 	</div>
 
 	<ul id="myUL">
@@ -177,6 +177,9 @@ input {
 			} else {
 				document.getElementById("myUL").appendChild(li);
 			}
+			// inputValue.action = "TodoListServlet";
+			// inputValue.method = "post";
+			
 			document.getElementById("myInput").value = "";
 
 			var span = document.createElement("SPAN");
