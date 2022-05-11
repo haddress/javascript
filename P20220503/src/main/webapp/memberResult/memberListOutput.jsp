@@ -16,7 +16,7 @@
 		<c:when test="${empty all }"><h3>회원정보가 없습니다.</h3></c:when>
 		<c:otherwise>
 				<table border="1">
-					<thead><tr><th>아이디</th><th>이름</th><th>이메일</th><th>비밀번호</th></tr></thead>
+					<thead><tr><th>아이디</th><th>이름</th><th>이메일</th><th>비밀번호</th><th>이미지</th></tr></thead>
 					<tbody>
 						<c:forEach items="${all }" var="member">
 							<tr>

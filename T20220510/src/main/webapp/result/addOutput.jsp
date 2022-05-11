@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>result/addOutput.jsp</title>
+</head>
+<body>
+
+	<h3>도서 [${bookTitle}] 등록완료</h3>
+	
+    <a href="${pageContext.servletContext.contextPath }/index.jsp">첫페이지</a>
+
+</body>
+</html>
