@@ -15,7 +15,7 @@ public class MemberSearchControl implements Control {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String id = request.getParameter("id");
-		String job = request.getParameter("job"); // memberUpdate.jsp의 input name="job" / update값이 넘어옴
+		String job = request.getParameter("job"); // memberSearch.jsp의 input name="job" / update값이 넘어옴
 		
 		
 		String path = "";
