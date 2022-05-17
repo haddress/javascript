@@ -20,12 +20,17 @@ public class AddBookControl implements Controller {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// db insert
+		// addBook.do -> 실제로는 이 페이지인 AddBookControl.java가 실행 -> addOutput.jsp 로 넘어감 
+		
 		System.out.println("입력처리 컨트롤");
 		
 		String bt = request.getParameter("title");
 		String ba = request.getParameter("author");
 		String bpress = request.getParameter("press");
 		int bprice = Integer.parseInt(request.getParameter("price"));
+		
+		String title = request.getParameter("title");
 		
 		BookVO vo = new BookVO();
 		vo.setBookTitle(bt);
@@ -37,6 +42,7 @@ public class AddBookControl implements Controller {
 		service.addBook(vo);
 		
 		request.setAttribute("bookTitle", bt);
+		request.setAttribute("title", title);
 		
 		request.getRequestDispatcher("result/addOutput.jsp").forward(request, response);
 	}

@@ -22,7 +22,7 @@ public class FrontController extends HttpServlet {
 		super();
 	}
 
-	public void init(ServletConfig config) throws ServletException {
+	public void init(ServletConfig config) throws ServletException { // 페이지 실행 시 최초 한 번만 실행
 
 		enc = config.getInitParameter("encoding");
 
@@ -37,15 +37,16 @@ public class FrontController extends HttpServlet {
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException { // 페이지가 실행되면 실제 시행되는 건 service라는 메소드가 실행
 
 		request.setCharacterEncoding(enc);
-
+		
+		// 사용자가 실행한 url을 보고 어떤 페이지를 요청했는지
 		String uri = request.getRequestURI();
 		String context = request.getContextPath();
 		String path = uri.substring(context.length());
 
-		Controller controller = map.get(path);
+		Controller controller = map.get(path); // ~Control()이 실행
 		controller.execute(request, response);
 
 	}

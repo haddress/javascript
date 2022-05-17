@@ -6,7 +6,7 @@
 	<display-name>T20220510</display-name>
 
 	<servlet>
-		<servlet-name>main</servlet-name>
+		<servlet-name>main</servlet-name> <!-- main이라는 서블릿은 frontcontroller 실행 -->
 		<servlet-class>co.test.web.FrontController</servlet-class>
 		<init-param>
 			<param-name>encoding</param-name>
@@ -16,9 +16,16 @@
 
 	<servlet-mapping>
 		<servlet-name>main</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>*.do</url-pattern> <!-- .do로 끝나는 파일은 main이라는 서블릿 실행 -->
 	</servlet-mapping>
-
+	
+		<resource-ref> <!-- xml.txt에서 복사해옴 -->
+		<description>Oracle Database Connection Pool</description>
+		<res-ref-name>jdbc/myoracle</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

@@ -11,13 +11,14 @@
 
     <h3>도서등록</h3>
     <form action="../addBook.do" method="post">
-        제목: <input type="text" name="title"><br>
+        제목: <input type="text" name="title"><br> <!-- name 속성이 파라미터 -->
         저자: <input type="text" name="author"><br>
         출판사: <input type="text" name="press"><br>
         가격: <input type="text" name="price"><br>
         <input type="submit" value="등록">
     </form>
     
+    <a href="../addBook.do?title=test&author=home&press=yedam">링크..</a> <!-- 질의문자열 -->
     <a href="${pageContext.servletContext.contextPath }/index.jsp">첫페이지</a>
 
 </body>
