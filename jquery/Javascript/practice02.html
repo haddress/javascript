@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중복입력값체크.jsp</title>
+    <style>
+        [name="no"] {
+            width: 30px;
+            margin: 0px 5px 0px 0px;
+        }
+    </style>
+</head>
+<body>
+    <form id="frm" name="frm">
+        <div><span>번호</span> <span>이름</span></div>
+        <div><input name="no"><input name="name"/></div>
+        <div><input name="no"><input name="name"/></div>
+        <div><input name="no"><input name="name"/></div>
+        <div><input name="no"><input name="name"/></div>
+        <div><button type="button" id="btnlns">등록</button></div>
+    </form>
+
+    <script>
+        window.addEventListener("load", function() {
+            btnlnsCheck();
+        })
+
+        function btnlnsCheck() {
+            btnlns.addEventListener("click", function() {
+                var nos = document.getElementsByName("no");
+                var names = document.getElementsByName("name");
+                var arrl = document.querySelectorAll("input[name=no]").length;
+                var arr = new Array(arrl);
+                
+                // 배열에 담기
+                for(i=0; i<arrl; i++) {
+                    arr[i] = {"no":nos[i].value, "name":names[i].value};
+                }
+                console.log(arr);
+                
+                // 중복값 체크 //
+                for(var i=0; i<arr.length; i++) {
+                    for(var j=i+1; j<arr.length; j++) {
+                        if(arr[i].name == arr[j].name) {
+                            alert(arr[j].name + ' 중복값이 존재합니다.');
+                            return false;
+                        }
+                    }
+                }
+
+                // 배열 출력
+                console.log(JSON.stringify(arr));
+            })
+        }
+    </script>
+</body>
+</html>

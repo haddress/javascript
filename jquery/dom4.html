@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <title>Document</title>
+  <script>
+    $(function(){
+      $("dt").on("click", function(){
+        // 클릭한 태그의 동생노드를 보이게 지정
+        //$("dd").hide()
+        //$("dd").slideUp()
+        //$(this).next().show(500)
+        //$(this).next().slideDown(500)
+        $(this).next().toggle(500)
+      })
+    })
+  </script>
+  <style>
+    dd { display : none;}
+  </style>
+</head>
+<body>
+  <dt>java</dt>
+  <dd>자바란</dd>
+  <dt>spring</dt>
+  <dd>스프링이란</dd>
+  <dt>sql</dt>
+  <dd>sql이란</dd>
+</body>
+</html>

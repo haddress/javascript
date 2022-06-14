@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input id="inTxt">
+  <button type="button" id="btn">추가</button>
+  <div id="result">
+  </div>
+ 
+  <script>
+    btn.addEventListener("click", function() {
+      // value, innerHTML속성 사용
+        result.innerHTML += inTxt.value + '<br>';
+        //inTxt.select(); // 입력했던 내용 선택
+        inTxt.value = ''; // 초기화
+        inTxt.focus(); // 초기화 한 후 커서
+    })
+
+    inTxt.addEventListener("focusin", function() {
+      this.style.backgroundColor = 'cyan';
+    })
+
+    inTxt.addEventListener("focusout", function() {
+      this.style.backgroundColor = 'white';
+    })
+    
+    document.addEventListener("keydown", function() {
+      console.log(event.keyCode);
+    })
+
+    inTxt.addEventListener("keypress", function() {
+       console.log(window.event); // window.event = event -> window 생략가능
+      // console.log(window.event.target); // 이벤트가 발생한 태그 자체를 보여줌
+      // console.log(this); // = window.event.target
+      if(event.keyCode == 13) { // 엔터코드 NumpadEnter의 아스키코드가 13
+        btn.click();
+      }
+    })
+  </script>
+</body>
+</html>

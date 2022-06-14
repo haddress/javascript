@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <select id="fruit"></select>
+  <script>
+    let arr = [{name:"사과",val:"a"},{name:'배',val:"b"},{name:"키위",val:"c"}];
+    for(i=0; i<arr.length; i++) {
+      var op = $("<option>").html(arr[i].name)
+                            .val(arr[i].val)
+                           .appendTo($("#fruit"))
+      $("#fruit").append(op)
+      // var op = document.createElement("option");
+      // op.value = arr[i].val;
+      // op.innerHTML = arr[i].name;
+      // fruit.appendChild(op);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>
+    $(function(){
+      $("#btn").on("click", function(){
+        // input값을 이용해서 li태그 생성해서 추가
+        $("ul").append($("<li>").html($("#fruit").val())
+                                .append($("<span>").html($("#price").val())))
+
+      })
+      $("ul").on("mouseenter", function(event){
+        if(event.target.tagName == "LI") {
+          // find 사용 -> span태그 찾아서 보이게
+          $(event.target).find("span").show(100);
+        }
+      })
+      $("ul").on("mouseleave", function(event){
+        // span 태그 찾아서 안보이게
+        if(event.target.tagName == "LI") {
+          $(event.target).find("span").hide(100);
+        }
+      })
+    })
+  </script>
+  <style>
+    span {display: none;}
+  </style>
+</head>
+<body>
+  <input id="fruit">
+  <input id="price">
+  <button type="button" id="btn">추가</button>
+  <ul>
+    <li>바나나<span>300</span></li>
+    <li>사과<span>200</span></li>
+  </ul>
+  
+</body>
+</html>

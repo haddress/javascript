@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <title>class.html</title>
+  <style>
+    .div0 { color:orange}
+    .div1 { color:blue}
+    .div2 { color:yellowgreen}
+  </style>
+</head>
+<body>
+  <div data-id="g1" data-name="kim">내용1</div>
+  <div data-id="g2" data-name="park">내용2</div>
+  <div data-id="g3" data-name="choi">내용3</div>
+
+  <script>
+    $("div").addClass(function(index) {
+      return "div" + index;
+      // return `div${index}`;
+    })
+
+    $("div").click(function(index) {
+      // div 태그의 클래스 지움
+      $("div").removeClass()
+      $(this).addClass("div0")
+    })
+  </script>
+</body>
+</html>

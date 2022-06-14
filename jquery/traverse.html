@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <title>jquery/traverse</title>
+</head>
+<body>
+  <table id="goods" border="1">
+    <tr>
+      <td class="no">1</td>
+      <td data-no="g01" id="g01">2</td>
+      <td><button type="button" class="btn">조회</button></td>
+    </tr>
+    <tr>
+      <td class="no">3</td>
+      <td data-no="g02">4</td>
+      <td><button type="button" class="btn">조회</button></td>
+    </tr>
+    <tr>
+      <td class="no">5</td>
+      <td data-no="g02">6</td>
+      <td><button type="button" class="btn">조회</button></td>
+    </tr>
+    <tr>
+      <td class="no">7</td>
+      <td data-no="f03">8</td>
+      <td><button type="button" class="btn">조회</button></td>
+    </tr>
+  </table>
+  <script>
+    $(".btn").click(function() {
+      // 클릭한 버튼의 조상태그의 첫번째 td태그의 내용 조회
+      var td1 = $(this).closest("tr").children().first().html()
+      console.log(td1)
+
+      // 클릭한 버튼의 조상태그의 두번째 td태그의 내용 조회
+      var td2 = $(this).closest("tr").children().eq(1).html()
+      console.log(td2)
+
+      // 클릭한 버튼의 부모의 형노드의 내용을 조회
+      var td3 = $(this).parent().prev().html()
+      console.log(td3)
+    })
+  </script>
+</body>
+</html>

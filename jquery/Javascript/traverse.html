@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>javascript/traverse</title>
+</head>
+<body>
+  <table id="goods" border="1">
+    <tr>
+      <td class="no">1</td>
+      <td data-no="g01" id="g01">2</td>
+      <td><button type="button" class="btn">조회</button></td>
+    </tr>
+    <tr>
+      <td class="no">3</td>
+      <td data-no="g02">4</td>
+      <td><button type="button" class="btn">조회</button></td>
+    </tr>
+    <tr>
+      <td class="no">5</td>
+      <td data-no="g02">6</td>
+      <td><button type="button" class="btn">조회</button></td>
+    </tr>
+    <tr>
+      <td class="no">7</td>
+      <td data-no="f03">8</td>
+      <td><button type="button" class="btn">조회</button></td>
+    </tr>
+  </table>
+  <script>
+    var btns = document.getElementsByClassName("btn");
+    for (btn of btns) {
+      btn.addEventListener("click", function() {
+        // 클릭한 버튼의 부모의 형노드의 내용을 조회
+        var nd = this.parentElement.previousElementSibling.innerHTML;
+        //console.log(nd)
+        
+        // 클릭한 버튼의 조상태그의 첫번째 td태그의 내용 조회
+        var nd2 = this.closest("tr").firstElementChild.innerHTML;
+        //console.log(nd2)
+
+        // 자식노드를 배열로 취급하여 td태그의 내용 조회
+        var nd3 = this.closest("tr").children[1].innerHTML;
+        console.log(nd3)
+
+        // 속성값 출력
+        var nd4 = this.closest("tr").children[1].getAttribute("data-no");
+        console.log(nd4)
+      })
+    }
+  </script>
+</body>
+</html>

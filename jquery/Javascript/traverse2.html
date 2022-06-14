@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>javascript/traverse</title>
+</head>
+<body>
+  <table id="goods" border="1">
+    <tr data-no="1">
+      <td>kim</td>
+      <td>내용</td>
+      <td><button type="button" class="btn">삭제</button></td>
+    </tr>
+    <tr data-no="2">
+      <td>park</td>
+      <td>내용2</td>
+      <td><button type="button" class="btn">삭제</button></td>
+    </tr>
+    <tr data-no="3">
+      <td>choi</td>
+      <td>내용3</td>
+      <td><button type="button" class="btn">삭제</button></td>
+    </tr>
+  </table>
+  <script>
+    var btns = document.getElementsByClassName("btn");
+    for (btn of btns) {
+      btn.addEventListener("click", function() {
+        var no = this.closest("tr").getAttribute("data-no"); // 여기서 this는 클릭된 버튼을 가리킴
+        console.log(no)
+        this.closest("tr").remove();
+      })
+    }
+  </script>
+</body>
+</html>

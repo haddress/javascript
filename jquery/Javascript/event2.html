@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    span {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <input id="fruit">
+  <input id="price">
+  <button type="button" id="btn">추가</button>
+  <ul>
+    <li>바나나<span>300</span></li>
+    <li>사과<span>200</span></li>
+  </ul>
+
+  <script>
+    var ul = document.querySelector('ul');
+    var li = document.createElement('li');
+    btn.addEventListener('click', function() {
+      li.innerHTML = `${fruit.value} <span style="display:none;">${price.value}</span>`;
+      ul.appendChild(li);
+    })
+    
+    // 마우스오버시 가격이 보이게
+    var list = document.getElementsByTagName('li');
+    for (linode of list) {
+      linode.addEventListener('mouseover', function() {
+        this.getElementsByTagName('span')[0].style.display = "inline-block"; // this = event가 발생한 타겟
+        // span태그가 하나뿐이어도 배열형태로 넘어오므로 인덱스 지정 필요
+      })
+      linode.addEventListener('mouseout', function() {
+        this.getElementsByTagName('span')[0].style.display = "none"; // this = event가 발생한 타겟
+        // span태그가 하나뿐이어도 배열형태로 넘어오므로 인덱스 지정 필요
+      })
+    }
+
+  </script>
+
+</body>
+</html>

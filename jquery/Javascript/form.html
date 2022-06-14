@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="checkbox" name="hobby" value="read" checked>독서
+  <input type="checkbox" name="hobby" value="game" checked>게임
+  <br>
+  <select id="fruit">
+    <option value="a1">사과</option>
+    <option value="a2" selected>배</option>
+    <option value="a3">키위</option>
+  </select>
+  <script>
+    var idx = fruit.selectedIndex;
+    var val = fruit.options[idx].innerHTML;
+    console.log(val);
+  </script>
+</body>
+</html>

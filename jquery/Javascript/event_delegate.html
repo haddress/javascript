@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- event_delegate.html(이벤트 위임) -->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event_delegate</title>
+  <style>
+    span {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <input id="fruit">
+  <input id="price">
+  <button type="button" id="btn">추가</button>
+  <ul>
+    <li>바나나&nbsp;<span>300</span></li>
+    <li>사과&nbsp;<span>200</span></li>
+  </ul>
+
+  <script>
+    var fruit = document.getElementById('fruit');
+    var price = document.getElementById('price');
+    
+    // 데이터 입력 후 추가버튼 클릭 시 새로운 li 추가
+    var li = document.createElement('li');
+    btn.addEventListener('click', function() {
+      li.innerHTML = `${fruit.value}&nbsp;<span style="display:none;">${price.value}</span>`;
+      ul.appendChild(li);
+    })
+    
+    // 마우스오버시 가격이 보이게
+    var ul = document.getElementsByTagName('ul')[0];
+    ul.addEventListener('mouseover', function() {
+      // 현재 event.target이 li태그에 걸려있는지 검사 -> li태그에 걸려있어야함
+      if(event.target.tagName == "LI") {
+        event.target.getElementsByTagName('span')[0].style.display = "inline-block"; // this = event가 발생한 타겟
+        // span태그가 하나뿐이어도 배열형태로 넘어오므로 인덱스 지정 필요
+      }
+    })
+    ul.addEventListener('mouseout', function() {
+      if(event.target.tagName == "LI") {
+        event.target.getElementsByTagName('span')[0].style.display = "none"; // this = event가 발생한 타겟
+        // span태그가 하나뿐이어도 배열형태로 넘어오므로 인덱스 지정 필요
+      }
+    })
+  
+
+  </script>
+
+</body>
+</html>
