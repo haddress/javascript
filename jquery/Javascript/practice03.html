@@ -22,8 +22,10 @@
 
     <script>
       let txtArr = [];
+      var div = document.getElementById("result");
+
       window.onload = function() {
-        btnAdd.addEventListener("cilck", funcAdd)
+        btnAdd.addEventListener("click", funcAdd)
         btnDelete.addEventListener("click", funcDelete)
         btnSearch.addEventListener("click", funcSearch)
         txtFruit.addEventListener("focus", function() {this.select();})
@@ -31,14 +33,35 @@
 
       function funcAdd() {
         // 텍스트필드에 입력한 값을 배열에 추가하고 배열을 div에 출력
+        var addText = document.getElementById("txtFruit");
+        txtArr.push(addText.value);
+        div.innerHTML = "";
+        for (obj of txtArr) {
+          div.append(obj+", ");
+        }
       }
 
       function funcDelete() {
         // 텍스트필드에 입력한 값을 배열에서 삭제하고 배열을 div에 출력
+        var addText = document.getElementById("txtFruit");
+        var search = txtArr.indexOf(addText.value);
+        txtArr.splice(search, 1);
+        div.innerHTML = "";
+        for (obj of txtArr) {
+          div.append(obj+", ");
+        }
       }
 
       function funcSearch() {
         // 텍스트필드에 입력한 값을 배열에서 검색해서 검색위치를 div출력
+        var addText = document.getElementById("txtFruit");
+        var search = txtArr.indexOf(addText.value);
+        div.innerHTML = "";
+        for (obj of txtArr) {
+          div.append(obj+", ");
+        }
+        var br = document.createElement("br");
+        div.append(br, "검색위치: "+search);
       }
     </script>
 </body>

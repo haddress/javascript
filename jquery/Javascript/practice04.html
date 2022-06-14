@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select 태그</title>
+    <style>
+        #result {border: 1px solid blue; width: 300px; height: 100px;}
+        select {width: 300px;}
+    </style>
+</head>
+<body>
+    <select id="subject" multiple="multiple" size="5">
+        <option value="java">자바</option>
+        <option value="jsp">JSP</option>
+        <option value="spring">스프링</option>
+    </select><br>
+    <button id="btn">확인</button>
+    <div id="result"></div>
+    
+    <script>
+        window.addEventListener("load", function() {
+            // 확인 버튼 이벤트
+            btn.addEventListener("click", function() {
+                // 선택과목 수와 선택과목명을 div에 출력(다중선택이 가능함)
+                var cnt = 0;
+                var arr = [];
+                var div = document.getElementById("result");
+                var select = document.getElementById("subject");
+                var br = document.createElement("br");
+                div.innerHTML = "";
+                for(i=0; i<select.length; i++) {
+                    if(select[i].selected) {
+                        cnt++;
+                        arr.push(select[i].innerHTML);
+                    }
+                } 
+                div.append("선택과목 수: " + cnt, br, "선택과목: ");
+                for(obj of arr) {
+                    div.append(obj + ", ");
+                }
+
+
+            })
+        })
+    </script>
+</body>
+</html>
