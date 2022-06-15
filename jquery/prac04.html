@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <title>Select 태그</title>
     <style>
         #result {border: 1px solid blue; width: 300px; height: 100px;}
@@ -28,6 +29,7 @@
                 var arr = [];
                 var div = document.getElementById("result");
                 var select = document.getElementById("subject");
+                var br = document.createElement("br");
                 div.innerHTML = "";
                 for(i=0; i<select.length; i++) {
                     if(select[i].selected) {
@@ -35,7 +37,7 @@
                         arr.push(select[i].innerHTML);
                     }
                 } 
-                div.append("선택과목 수: " + cnt, "<br>", "선택과목: ");
+                div.append("선택과목 수: " + cnt, br, "선택과목: ");
                 for(obj of arr) {
                     div.append(obj + ", ");
                 }

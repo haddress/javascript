@@ -7,24 +7,30 @@
   <title>Document</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script>
+    var gv = "전역변수"; // 모든 전역변수는 모두 window.에 속함 ex) window.alert() -> window 생략
+    let bv = "블록변수";
     $(function(){
       $("#btn").on("click", function(){
+        var lv = "지역변수";
         // input값을 이용해서 li태그 생성해서 추가
-        $("ul").append($("<li>").html($("#fruit").val())
-                                .append($("<span>").html($("#price").val())))
+        // $("ul").append($("<li>").html($("#fruit").val())
+        //                         .append($("<span>").html($("#price").val())))
+        var gm = $("#fruit").html()
+        var pr = $("#price").val()
+        $("<li>").html(gm+"<span>"+pr+"</span>").appendTo($("ul"))
 
       })
-      $("ul").on("mouseenter", function(event){
-        if(event.target.tagName == "LI") {
+      $("ul").on("mouseenter", "li", function(){
+        //if(event.target.tagName == "LI") {
           // find 사용 -> span태그 찾아서 보이게
-          $(event.target).find("span").show(100);
-        }
+          $(this).find("span").show(100);
+        //}
       })
-      $("ul").on("mouseleave", function(event){
+      $("ul").on("mouseleave", "li", function(){
         // span 태그 찾아서 안보이게
-        if(event.target.tagName == "LI") {
-          $(event.target).find("span").hide(100);
-        }
+        //if(event.target.tagName == "LI") {
+          $(this).find("span").hide(100);
+        //}
       })
     })
   </script>

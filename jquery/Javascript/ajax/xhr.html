@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <button type="button" id="btn">박스오피스조회</button>
+  <button type="button" id="btnInfo">영화조회</button>
+  <div id="boxlist">
+
+  </div>
+
+  <script>
+    
+    $("#btn").click(dailyList);
+    $("#btnInfo").click(movieInfo);
+
+    function movieInfo() {
+      var req = new XMLHttpRequest();
+      var url = "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=20204548";
+      req.open('GET', url, true);
+      req.send();
+
+      req.onload = function () {
+        var obj = JSON.parse(this.responseText);
+        // 영화감독 이름을 출력
+        var director = obj.movieInfoResult.movieInfo.directors[0].peopleNm;
+        $("#boxlist").html("")
+        $("#boxlist").append(director)
+      };
+    }
+    
+    function dailyList() {
+      // XMLHttpRequest 객체의 생성
+      var req = new XMLHttpRequest();
+      var url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20220614";
+      // 비동기 방식으로 Request를 오픈한다
+      req.open('GET', url, true);
+      // Request를 전송한다
+      req.send();
+
+      // XMLHttpRequest.readyState 프로퍼티가 변경(이벤트 발생)될 때마다 콜백함수(이벤트 핸들러)를 호출한다.
+      req.onload = function () {
+        // 이 함수는 Response가 클라이언트에 도달하면 호출된다.
+        var obj = JSON.parse(this.responseText);
+        var list = obj.boxOfficeResult.dailyBoxOfficeList;
+        $("#boxlist").html("")
+        for(mv of list) {
+          $("#boxlist").append(mv.movieNm, "<br>")
+        }
+      };
+    }
+  </script>
+</body>
+</html>
