@@ -24,31 +24,52 @@
     <script>
       let txtArr = [];
 
-      window.onload = function() {
-        btnAdd.addEventListener("click", funcAdd)
-        btnDelete.addEventListener("click", funcDelete)
-        btnSearch.addEventListener("click", funcSearch)
-        txtFruit.addEventListener("focus", function() {this.select();})
-      }
+      $(function() {
+        $("#btnAdd").click(funcAdd)
+        $("#btnDelete").click(funcDelete)
+        $("#btnSearch").click(funcSearch)
+        $("#txtFruit").focus(function() {this.select();})
+      })
 
       function funcAdd() {
         // 텍스트필드에 입력한 값을 배열에 추가하고 배열을 div에 출력
         txtArr.push($("#txtFruit").val())
         $("#result").html("")
-        for (obj of txtArr) {
-          $("#result").append(obj+", ")
+        for (i=0; i<txtArr.length; i++) {
+          if(i != txtArr.length-1) {
+            $("#result").append(txtArr[i]+", ");
+          } else {
+            $("#result").append(txtArr[i]);
+          }
         }
-
       }
 
       function funcDelete() {
         // 텍스트필드에 입력한 값을 배열에서 삭제하고 배열을 div에 출력
-
+        var search = txtArr.indexOf($("#txtFruit").val())
+        txtArr.splice(search, 1)
+        $("#result").html("")
+        for (i=0; i<txtArr.length; i++) {
+          if(i != txtArr.length-1) {
+            $("#result").append(txtArr[i]+", ");
+          } else {
+            $("#result").append(txtArr[i]);
+          }
+        }
       }
 
       function funcSearch() {
         // 텍스트필드에 입력한 값을 배열에서 검색해서 검색위치를 div출력
-
+        var search = txtArr.indexOf($("#txtFruit").val())
+        $("#result").html("")
+        for (i=0; i<txtArr.length; i++) {
+          if(i != txtArr.length-1) {
+            $("#result").append(txtArr[i]+", ");
+          } else {
+            $("#result").append(txtArr[i], "<br>");
+          }
+        }
+        $("#result").append("검색위치: "+search);
       }
     </script>
 </body>

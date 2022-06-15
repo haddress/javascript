@@ -35,12 +35,15 @@
                         arr.push(select[i].innerHTML);
                     }
                 } 
-                div.append("선택과목 수: " + cnt, "<br>", "선택과목: ");
-                for(obj of arr) {
-                    div.append(obj + ", ");
+                var br = document.createElement("br");
+                div.append("선택과목 수: " + cnt, br, "선택과목: ");
+                for(i=0; i<arr.length; i++) {
+                    if(i != arr.length-1) {
+                        div.append(arr[i] + ", ");
+                    } else {
+                        div.append(arr[i]);
+                    }
                 }
-
-
             })
         })
     </script>

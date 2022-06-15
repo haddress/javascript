@@ -21,30 +21,27 @@
     <div id="result"></div>
     
     <script>
-        window.addEventListener("load", function() {
+        $(function(){
             // 확인 버튼 이벤트
-            btn.addEventListener("click", function() {
+            $("#btn").click(function(){
                 // 선택과목 수와 선택과목명을 div에 출력(다중선택이 가능함)
-                var cnt = 0;
                 var arr = [];
-                var div = document.getElementById("result");
-                var select = document.getElementById("subject");
-                var br = document.createElement("br");
-                div.innerHTML = "";
-                for(i=0; i<select.length; i++) {
-                    if(select[i].selected) {
-                        cnt++;
-                        arr.push(select[i].innerHTML);
+                $("#result").html("")
+                $("#subject option:selected").each(function(i){
+                    arr.push($(this).html())
+                })
+
+                $("#result").append("선택과목 수: " + $("#subject option:selected").length, "<br>", "선택과목: ");
+                for(i=0; i<arr.length; i++) {
+                    if(i != arr.length-1) {
+                        $("#result").append(arr[i] + ", ");
+                    } else {
+                        $("#result").append(arr[i]);
                     }
-                } 
-                div.append("선택과목 수: " + cnt, br, "선택과목: ");
-                for(obj of arr) {
-                    div.append(obj + ", ");
                 }
-
-
             })
         })
+        
     </script>
 </body>
 </html>

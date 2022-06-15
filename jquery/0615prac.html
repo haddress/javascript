@@ -24,26 +24,47 @@
   <script>
     
     $("#btn").click(dailyList);
-    $("#boxlist").click(movieInfo);
+    $("#boxlist").on("click", "div", movieInfo);
 
     function movieInfo() {
       var req = new XMLHttpRequest();
-      var url = "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=20204548";
+      var code = $(this).attr("id");
+      var url = "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd="+code;
       req.open('GET', url, true);
       req.send();
       
       req.onload = function () {
         var obj = JSON.parse(this.responseText);
         var director = obj.movieInfoResult.movieInfo.directors[0].peopleNm;
-        $("#boxlist").html("")
-        $("#boxlist").append(director)
+        var actArr = obj.movieInfoResult.movieInfo.actors;
+        var actor = [];
+        for (i=0; i<actArr.length; i++) {
+          if (i<6) {
+            actor.push(actArr[i].peopleNm);
+          } else {
+            break;
+          }
+        }
+
+        var day = obj.movieInfoResult.movieInfo.openDt;
+        var openDt = day.slice(0, 4)+"/"+day.slice(4, 6)+"/"+day.slice(6, 8);
+        var showTm = obj.movieInfoResult.movieInfo.showTm;
+        $("#divInfo").html("")
+        $("#divInfo").append("<div>감독 : "+director+"</div><div>", "출연진 : ")
+        for(i=0; i<actor.length; i++) {
+          if (i != actor.length-1) {
+            $("#divInfo").append(actor[i]+", ")
+          } else {
+            $("#divInfo").append(actor[i]+" 등")
+          }
+        }
+        $("#divInfo").append("</div><div>개봉일자 : "+openDt+"</div><div>상영시간 : "+showTm+"분</div>")
       };
     }
     
     function dailyList() {
       var req = new XMLHttpRequest();
       var day = ($("#day").val()).replace(/\-/g, "")
-      console.log(day)
       var url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt="+day;
       req.open('GET', url, true);
       req.send();
@@ -53,7 +74,7 @@
         var list = obj.boxOfficeResult.dailyBoxOfficeList;
         $("#boxlist").html("")
         for(mv of list) {
-          $("#boxlist").append("<div id="+mv.movieCd+">"+mv.movieNm+"</div>", "<br>")
+          $("#boxlist").append("<div id="+mv.movieCd+">"+mv.movieNm+"</div>")
         }
       };
     }

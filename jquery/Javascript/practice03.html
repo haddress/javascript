@@ -36,8 +36,12 @@
         var addText = document.getElementById("txtFruit");
         txtArr.push(addText.value);
         div.innerHTML = "";
-        for (obj of txtArr) {
-          div.append(obj+", ");
+        for (i=0; i<txtArr.length; i++) {
+          if(i != txtArr.length-1) {
+            div.append(txtArr[i]+", ");
+          } else {
+            div.append(txtArr[i]);
+          }
         }
       }
 
@@ -47,20 +51,29 @@
         var search = txtArr.indexOf(addText.value);
         txtArr.splice(search, 1);
         div.innerHTML = "";
-        for (obj of txtArr) {
-          div.append(obj+", ");
+        for (i=0; i<txtArr.length; i++) {
+          if(i != txtArr.length-1) {
+            div.append(txtArr[i]+", ");
+          } else {
+            div.append(txtArr[i]);
+          }
         }
       }
 
       function funcSearch() {
         // 텍스트필드에 입력한 값을 배열에서 검색해서 검색위치를 div출력
         var addText = document.getElementById("txtFruit");
+        var br = document.createElement("br");
         var search = txtArr.indexOf(addText.value);
         div.innerHTML = "";
-        for (obj of txtArr) {
-          div.append(obj+", ");
+        for (i=0; i<txtArr.length; i++) {
+          if(i != txtArr.length-1) {
+            div.append(txtArr[i]+", ");
+          } else {
+            div.append(txtArr[i], br);
+          }
         }
-        div.append("<br>", "검색위치: "+search);
+        div.append("검색위치: "+search);
       }
     </script>
 </body>
