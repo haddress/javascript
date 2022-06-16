@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <title>widget.html(plugin)</title>
+  <script>
+    $(function(){
+      $("#accd").accordion({
+        collapsible: true, // 폴딩
+        active: 0, // 처음 보이는 시작패널
+        activate: function(event, ui) {
+          console.log(ui.newHeader.text())
+        }
+      });
+
+      // datepicker 테스트
+      $("#rdt").datepicker({
+        dateFormat: "yy-mm-dd",
+        maxDate: "+1w", // new Date(2022,7,1)
+        onSelect: function(str, obj) {
+          console.log(str)
+          console.log(obj.currentMonth+1) // 선택한 날짜의 월을 알고싶을경우
+        }
+      });
+
+      function makeModal() {
+        // 모달
+        var dialog = $("#dialog").dialog({
+        autoOpen: false, // 자동오픈 false
+        height: 400,
+        width: 350,
+        modal: false, // true일 경우 부모창 제어 불가, false일 경우 부모창과 모달창 둘 다 제어가능
+        buttons : {
+                   "등록": userAdd, // 모달이 로드되면서 form.html의 내용도 들어가므로 userAdd 함수 실행 가능
+                   "취소": function(){
+                      dialog.dialog("close");
+                    }
+                  }
+        });
+        return dialog;
+      }
+
+      // 버튼 클릭
+      $("#btnModal").on("click", function(){
+        $("#dialog").load("form.html", function() { // load -> ajax를 대체할 수 있는 함수 / load가 끝나면 실행할 콜백함수 설정
+          // 모달
+          var dialog = makeModal();
+          dialog.dialog("open");
+        }) 
+        // $.ajax({
+        //   url: "form.html"
+        //   // dataType: "html" -> 보내는 url이 html파일이므로
+        // }).done(function(result){
+        //   $("#dialog").html(result)
+        // })
+      })
+    })
+  </script>
+</head>
+<body>
+  <div id="accd">
+    <h3>java</h3>
+    <div>
+      작성일자 <input name="rdt" id="rdt">
+      <button type="button" id="btnModal">모달팝업열기</button>
+    </div>
+
+    <h3>spring</h3>
+    <div>스프링</div>
+
+    <h3>jsp</h3>
+    <div>제이에스피</div>
+  </div>
+
+  <div id="dialog" title="Basic dialog">
+    
+  </div>
+</body>
+</html>

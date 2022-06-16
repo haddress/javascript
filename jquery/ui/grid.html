@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+  <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <title>ui/grid.html</title>
+</head>
+<body>
+  <div id="grid">
+
+  </div>
+
+  <script>
+    var Grid = tui.Grid;
+ 
+    // case 1 : 인스턴스 생성시 data 옵션으로 데이터 입력
+    const grid = new Grid({ // grid 생성
+      el: document.getElementById('grid'), // grid가 그려질 위치
+      //data : data, // 들어갈 데이터
+      columns : [ // 컬럼구조
+        {
+          header: 'ID',
+          name: 'id'
+        },
+        {
+          header: 'CITY',
+          name: 'city',
+          editor: 'text'
+        },
+        {
+          header: 'COUNTRY',
+          name: 'country'
+        }
+    ]
+    });
+
+    // ajax 조회하고 grid
+    $.ajax({
+      url : 'data.json'
+    }).done(result => grid.resetData(result)) // 익명함수 1개면 function 생략가능, result값이 하나면 중괄호 생략가능
+
+    // 그리드에 이벤트 추가
+    grid.on("click", ev => { // 함수 생략, 함수에 들어가는 인수 1개면 소괄호 생략가능
+      console.log(ev.rowKey)
+      console.log(ev.columnName)
+      var value = grid.getValue(ev.rowKey, ev.columnName)
+      console.log(value);
+      // 모달 오픈
+    })
+  </script>
+</body>
+</html>
