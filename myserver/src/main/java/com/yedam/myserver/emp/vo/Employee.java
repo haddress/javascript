@@ -33,7 +33,8 @@ public class Employee {
 	@JsonProperty("fname") // first_name을 fname으로 저장하고 싶을 때 사용
 	private String first_name;
 	private Integer employee_id;
-	private String department_name;
+	
+	private Departments department; // 한 사람은 하나의 부서에 속해있는 1:1 관계를 가짐
 	
 	
 	

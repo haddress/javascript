@@ -25,12 +25,12 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/*-context.xml</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>1</load-on-startup> <!-- 서버가 스타트될때 1번째로 로드 -->
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/</url-pattern> <!-- / : 모든  -->
 	</servlet-mapping>
 
 	<filter>

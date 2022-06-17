@@ -43,7 +43,7 @@
 
 	<!-- Root Logger   fetal < error < info  < debug < trace  -->
 	<root>
-		<priority value="warn" />
+		<priority value="info" />
 		<appender-ref ref="console" />
 	</root>
 	

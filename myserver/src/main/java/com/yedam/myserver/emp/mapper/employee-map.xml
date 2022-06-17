@@ -2,10 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.myserver.emp.mapper.EmployeeMapper"> 
 
-<select id="findEmployees"  resultType="employee">
-	select *
-	from employees
-	order by employee_id  
+<resultMap type="jobs" id="jobEmployeeMap">
+	<collection property="employees" 
+				 javaType="ArrayList"
+				 column="job_id"
+				 ofType="Employee"
+				 select="findJobEmployees" />
+</resultMap> <!-- 1:n 관계는 property -->
+
+<select id="findJobs" resultMap="jobEmployeeMap">
+	select job_id, job_title, min_salary, max_salary
+	  from jobs
+	 order by job_id 
+</select>
+<select id="findJobEmployees" resultType="employee">
+	select * 
+	  from employees
+	  where job_id = #{job_id}
+	 order by job_id 
+</select>
+
+
+<resultMap type="employee" id="employeeMapSelect">
+	<association property="department" 
+				 javaType="departments"
+				 column="department_id"
+				 select="findDepartment" /> <!-- 1:1 관계는 association -->
+</resultMap>
+<select id="findDepartment" resultType="departments">
+	SELECT * 
+	FROM DEPARTMENTS 
+	WHERE DEPARTMENT_ID = #{department_id}
+</select>
+
+<resultMap type="employee" id="employeeMap">
+	<id column="EMPLOYEE_ID" property="employee_id"/>
+	<result column="first_name" property="first_name"/>
+	<result column="email" property="email"/>
+	<association property="department"> <!-- employee vo에 있는 department와 이름이 일치해야함 -->
+		<id column="department_id" property="department_id"/>
+		<result column="DEPARTMENT_NAME" property="manager_id"/>
+		<result column="LOCATION_ID" property="location_id"/>
+<!-- 		<result column="MANAGER_ID" property="manager_id"/> -->
+	</association>
+</resultMap>
+
+<select id="findEmployees" resultMap="employeeMapSelect">
+	SELECT E.*
+	FROM EMPLOYEES E
+	ORDER BY EMPLOYEE_ID  
 </select>
 
 <insert id="persist" >
@@ -42,11 +87,7 @@
 	where employee_id = #{employee_id}
 </update>
 
-<select id="findJobs" resultType="jobs">
-	select job_id, job_title 
-	  from jobs
-	 order by job_id 
-</select>
+
 
 <select id="findDepartments" resultType="departments">
 	select a.department_id, a.department_name 

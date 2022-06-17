@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="false"></setting> <!-- 오라클의 컬럼명의 언더스코어를 없애고 첫문자를 대문자로 바꿔줌  -->
+	</settings>
 	<typeAliases>
 		<package name="com.yedam.myserver"/> 
 	</typeAliases>

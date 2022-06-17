@@ -16,7 +16,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<mvc:annotation-driven />
 	
-	<context:component-scan base-package="com.yedam.muserver">
+	<context:component-scan base-package="com.yedam.myserver">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
@@ -29,5 +29,5 @@
 	<!-- @Transactional -->
 	<tx:annotation-driven/>
 	
-	<aop:aspectj-autoproxy/>
+	<aop:aspectj-autoproxy/> <!-- 자동으로 스캔해서 Aspect 설정을 해주는 기능 -->
 </beans>
