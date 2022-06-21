@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<security:http pattern="/css/**" security="none" />
+	<security:http>
+		<security:intercept-url pattern="/top.jsp"
+			access="permitAll()" /> <!-- 모두 접근 가능 -->
+		<security:intercept-url pattern="/login.jsp"
+			access="permitAll()" />
+		<security:intercept-url pattern="/admin/**"
+			access="hasAuthority('ROLE_ADMIN')" /> <!-- admin roll을 가진 사람만 접근 가능 -->
+		<security:intercept-url pattern="/**" 
+			access="isAuthenticated()" /> <!-- pattern="/**" -> 로그인 해야 접근 가능 -->
+		<security:form-login
+			login-page="/login.jsp"
+			login-processing-url="/processLogin"
+			username-parameter="id"
+			authentication-success-handler-ref="loginSuccessHandler"
+		 default-target-url="/top.jsp" /> <!-- login-processing-url에는 로그인form의 action값 / username-parameter에는 로그인input name값 -->
+		<!-- handler가 우선이므로 handler가 있을 경우 target-url은 적용되지 않음 -->
+		<security:logout logout-url="/logout" 
+			logout-success-url="/top.jsp" /> <!-- 로그아웃 한 후에 top 페이지로 -->
+		<security:access-denied-handler error-page="/accessDenied.jsp"/> <!-- 따로 자바 페이지 만들었으면 ref로 지정가능, jsp로 만들었으면 바로 url 연결 -->
+		<security:csrf disabled="false" />
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userServiceImpl"> <!-- 직접 만든 UserServiceImpl로 가서 로그인 체크 할 수 있도록 -->
+			<security:password-encoder hash="bcrypt"/>
+<!-- 		<security:user-service>
+				<security:user name="user" password="{noop}1234" 
+					authorities="ROLE_USER" /> noop -> 암호에 NoOpPasswordEncoder를 사용
+				<security:user name="admin" password="{noop}1234"
+					authorities="ROLE_ADMIN" />
+			</security:user-service> -->
+<!-- 			<security:jdbc-user-service data-source-ref="dataSource"
+			 users-by-username-query="select id, password, 1 from users where id = ?"
+			 authorities-by-username-query="select id, 'ROLE_' || upper(role) from users where id = ?"
+			 /> -->
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+
+</beans>
